@@ -34,17 +34,16 @@ void init_shell(void)
 void shell_loop(void)
 {
 	char *line;
-	char **args;
-	int status;
+	char *command;
+	int status = 0;
 
 	do {
-		printf("($) ");
-		line = read_line();
-		args = parse_line(line);
-		status = execute(args);
+		printf("#cisfun$ ");
+		line = read_input();
+		command = parse_input(line);
+		execute_command(command);
 
 		free(line);
-		free(args);
 	}
 
 	while (status);

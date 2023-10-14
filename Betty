@@ -1,0 +1,8 @@
+#include "shell.h"
+
+/**
+ * main - Entry point for the shell
+ * @argc: Argument count
+ * @argv: Argument vector
+ * Return: 0 on success, error code on failure
+ */

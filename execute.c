@@ -8,7 +8,7 @@
  * the command using execve.
  * Return: Status of the execution
  */
-void execute_command(char *command)
+void execute_command(char **command)
 {
 	pid_t pid;
 	int status;
@@ -29,15 +29,16 @@ void execute_command(char *command)
 			perror("./shell: allocation error");
 			exit(EXIT_FAILURE);
 		}
-		args[0] = command;
+		args[0] = command [0];
 		args[1] = NULL;
 
-		if (execve(command, args, NULL) == -1)
+		if (execve(args[0], args, NULL) == -1)
 		{
 			perror("./shell");
 			free(args);
 			exit(EXIT_FAILURE);
 		}
+		free(args);
 	}
 	else if (pid < 0)
 	{
@@ -49,5 +50,4 @@ void execute_command(char *command)
 		/* Parent process */
 		wait(&status);
 	}
-	free (args);
 }

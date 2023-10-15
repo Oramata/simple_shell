@@ -8,35 +8,23 @@
  */
 int main(void)
 {
-	char *line = NULL;
-	char **command = parse_input(line);
-	int i;
+	char *command[256];
 
-	while (1)
+	command[0] = malloc(256 * sizeof(char));
+	if (command[0] == NULL)
 	{
-		display_prompt();
-		line = read_input();
-		if (!line)
-		{
-			perror("Error reading input");
-			continue;
-		}
-		command = parse_input(line);
-		if (!command)
-		{
-			perror("Error parsing input");
-			free(line);
-			continue;
-		}
-		execute_command(command);
-		free(line);
-		/* Assuming command ia a NULL-terminated array of strings */
-		for (i = 0; command[i] != NULL; i++)
-		{
-			free(command[i]);
-		}
-		free(command);
+		fprintf(stderr, "Memory allocation failed\n");
+		exit(EXIT_FAILURE);
 	}
 
+	printf(":) ");
+
+	while (fgets(command[0], 256, stdin) != NULL)
+	{
+		command[0][strcspn(command[0], "\n")] = 0;
+		execute_command(command);
+		printf(":) ");
+	}
+	free(command[0]);
 	return (0);
 }

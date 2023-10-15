@@ -16,6 +16,7 @@ void init_shell(void);
 void shell_loop(void);
 char *read_input(void);
 void execute_command(char **command);
-
+char *find_command(char *command);
+void execute_cmd(char **command);
 
 #endif

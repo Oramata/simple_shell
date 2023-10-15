@@ -32,10 +32,9 @@ void execute_command(char **command)
 		args[0] = command [0];
 		args[1] = NULL;
 
-		if (execve(args[0], args, NULL) == -1)
+		if (execve(args[0], command, NULL) == -1)
 		{
 			perror("./shell");
-			free(args);
 			exit(EXIT_FAILURE);
 		}
 		free(args);

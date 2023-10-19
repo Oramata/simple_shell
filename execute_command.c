@@ -9,6 +9,7 @@ void execute_command(char **command)
 	pid_t pid;
 	int status;
 	char *path;
+	extern char **environ;
 
 
 	if (command == NULL || command[0] == NULL)
@@ -16,6 +17,7 @@ void execute_command(char **command)
 		fprintf(stderr, "Command is NULL\n");
 		return;
 	}
+	
 
 	path = find_command(command[0]);
 
@@ -23,9 +25,10 @@ void execute_command(char **command)
 	if (pid == 0)
 	{
 		/* Child process */
-		execv(path ? path : command[0], command);
-		perror("execv");
-		exit(EXIT_FAILURE);
+		if (execve(path ? path : command[0], command, environ) == -1)
+		{
+			perror("Error");
+		}
 	}
 	else if (pid > 0)
 	{

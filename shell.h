@@ -18,6 +18,5 @@ void execute_command(char **command);
 char *find_command(char *command);
 void execute_cmd(char **command);
 void shell_loop(void);
-void display_prompt(void);
 
 #endif

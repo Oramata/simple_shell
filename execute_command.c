@@ -20,14 +20,20 @@ void execute_command(char **command)
 	
 
 	path = find_command(command[0]);
+	if (path == NULL)
+	{
+		fprintf(stderr, "%s: command not found\n", command[0]);
+		return;
+	}
 
 	pid = fork();
 	if (pid == 0)
 	{
 		/* Child process */
-		if (execve(path ? path : command[0], command, environ) == -1)
+		if (execve(path, command, environ) == -1)
 		{
 			perror("Error");
+			exit(EXIT_FAILURE);
 		}
 	}
 	else if (pid > 0)

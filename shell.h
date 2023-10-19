@@ -14,9 +14,10 @@ char *read_input(void);
 char **parse_input(char *line);
 void init_shell(void);
 void shell_loop(void);
-char *read_input(void);
 void execute_command(char **command);
 char *find_command(char *command);
 void execute_cmd(char **command);
+void shell_loop(void);
+void display_prompt(void);
 
 #endif

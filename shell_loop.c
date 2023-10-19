@@ -7,11 +7,11 @@ void shell_loop(void)
 {
 	char *line = NULL;
 	char **command;
-	int status = 1;
 	int i;
 
-	do {
-		printf("#cisfun$ ");
+	while (1)
+	{
+		display_prompt();
 		line = read_input();
 		if (line == NULL) {
 			/* Handle error or end of input */
@@ -25,6 +25,12 @@ void shell_loop(void)
 			continue;
 		}
 
+		if (strcmp(command[0], "exit") == 0)
+		{
+			free(line);
+			exit(0);
+		}
+
 		execute_command(command);
 
 		free(line);
@@ -33,5 +39,4 @@ void shell_loop(void)
 		}
 		free(command);
 	}
-	while (status);
 }

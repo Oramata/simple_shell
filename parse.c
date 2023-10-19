@@ -5,7 +5,7 @@
  * @line: The line to parse
  * Return: An array of arguments
  */
-char **parse_line(char *line)
+char **parse_input(char *line)
 {
 	int bufsize = 64, position = 0;
 	char **tokens = malloc(bufsize * sizeof(char *));
@@ -20,7 +20,7 @@ char **parse_line(char *line)
 	token = strtok(line, " \t\r\n\a");
 	while (token != NULL)
 	{
-		tokens[position] = token;
+		tokens[position] = strdup(token);
 		position++;
 
 		if (position >= bufsize)
@@ -36,6 +36,6 @@ char **parse_line(char *line)
 
 		token = strtok(NULL, " \t\r\n\a");
 	}
-	token = strtok(line, "\n");;
+	tokens[position] = NULL;
 	return (tokens);
 }

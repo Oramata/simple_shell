@@ -1,48 +1,48 @@
 #include "shell.h"
-
+#include <limits.h>
+#include <unistd.h>
+#include <stdlib.h>
 /**
  * shell_loop - Main loop of the shell
  */
 void shell_loop(void)
 {
-	char *line = NULL;
-	char **command;
+	char *line
+	char **commands;
+	int status = 0;
 	int i;
 
 	while (1)
 	{
 		display_prompt();
 		line = read_input();
-		if (line == NULL) {
-			/* Handle error or end of input */
-			break;
-		}
-
-		command = parse_input(line);
-		if (command == NULL) {
-			/* Handle error or empty command */
-			free(line);
-			continue;
-		}
-		
-		/* Check for "exit" built-in */
-		if (strcmp(command[0], "exit") == 0)
+		if (!line)
 		{
-			free(line);
-			for (i = 0; command[i] != NULL; i++)
+			if (feof(stdin))
 			{
-				free(command[i]);
+				/* Handle EOF */
+				printf("\n");
+				break;
+			} else {
+				/* Handle read error */
+				perror("readline");
+				continue;
 			}
-			free(command);
-			exit(0);
 		}
 
-		execute_command(command);
+		commands = parse_input(line);
+		if (commands) {
+			status = execute_command(commands);
+		}
 
 		free(line);
-		for (i = 0; command[i] != NULL; i++) {
-			free(command[i]);
+		if (commands)
+		{
+			for (i = 0; commands[i] != NULL; i++)
+			{
+				free(commands[i]);
+			}
+			free(commands);
 		}
-		free(command);
 	}
 }

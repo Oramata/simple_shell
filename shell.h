@@ -27,5 +27,7 @@ int execute_individual_command(char *cmd, char **args);
 int execute_command(char **command);
 char *find_command(char *command);
 int execute_command(char **args);
+void handle_error(const char *error_message);
+char *trim_whitespace(char *str);
 
 #endif

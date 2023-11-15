@@ -2,6 +2,8 @@
 #include <limits.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <stdio.h>
+
 /**
  * shell_loop - Main loop of the shell
  */
@@ -10,7 +12,6 @@ void shell_loop(void)
 	char *line
 	char **commands;
 	int status = 0;
-	int i;
 
 	while (1)
 	{
@@ -31,7 +32,8 @@ void shell_loop(void)
 		}
 
 		commands = parse_input(line);
-		if (commands) {
+		if (commands)
+		{
 			status = execute_command(commands);
 		}
 

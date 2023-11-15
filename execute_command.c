@@ -10,7 +10,6 @@ int execute_individual_command(char *cmd, char **args)
 {
 	pid_t pid;
 	int status;
-	extern char **environ;
 
 	pid = fork();
 	if (pid == -1)
@@ -86,4 +85,5 @@ int execute_command(char **args)
 
 		i++;
 	}
+	return(your_return_value);
 }
